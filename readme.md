@@ -1,13 +1,13 @@
 <body>
 <h1>xxd video</h1>
-    <p>A minimal version of youtube, without any recommendations or ads
+    <p>a minimal version of youtube, without any recommendations or ads
     </p>
 
 <h2>quickstart</h3>
     <p><ul>
     <li>if you're here to replace your sub-box, go to <a href="../subbox-generator/" target="_blank" rel="noopener">this link</a> and follow the instructions.</li>
     <li>if you're here to watch one video free of ads and recommendations, get a <a href="https://developers.google.com/youtube/v3/getting-started" target="_blank" rel="noopener">valid api key</a> and see <a href="#watch">watch</a> for reference.</li>
-    <li>if you want to self-host this, get the <a href="https://github.com/xxd-dev/xxd-dev.github.io" target="_blank" rel="noopener">sourcecode</a>.</li>
+    <li>if you want to self-host this, get the <a href="https://github.com/xxd-dev/video" target="_blank" rel="noopener">sourcecode</a>.</li>
     </ul>
     </p>
 
