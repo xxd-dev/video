@@ -1,0 +1,2 @@
+this website itself does not use cookies, nor does it collect any data on you. I respect your privacy and have honestly no interest in collecting any data.
+but this website does embed youtube videos, and these embedded videos can place cookies on your system. the webpage still works without cookies and I encourage you to turn off cookies completely.

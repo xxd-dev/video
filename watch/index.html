@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <script type="text/javascript" src="watch.js"></script>  
+    <title>xxd</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body onload="main()">
+    <header>
+        <div class='header-container'>
+            <div class='header-left'>
+                <div>
+                    <a class="main-logo-link" href="../" target="_blank" rel="noopener"><div>
+                        <img class="main-logo-image" src="../xxd.png" alt="MyTube">
+                    </div></a>
+                </div>
+            </div>
+            <div class='header-center'>
+                <div>
+                    <div class="search-bar">
+                        <input class="search-field" placeholder="Search" id="search-field" onkeydown="keydownSearch(event)">
+                        <button class="search-button" onclick="search()">
+                            <img src="../search.png" class="search-image">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="video-column">
+            <div class="iframe-wrapper" id="iframe-wrapper">
+                <iframe id="main-player" src="" title="YouTube video player" frameborder="0" allow="clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h2 class="main-video-title" id="video-title">Title</h2>
+            <div class="main-video-info-container">
+                <p class="main-video-info" id="main-video-info">X views - Date</p>
+                <div class="main-video-like-share-container">
+                    <div class="like-share-container">
+                        <img src="../like.png">
+                        <h3 id="likes">Likes</h3>
+                    </div>
+                    <div class="like-share-container" onclick="alert(1)">
+                        <img src="../share.png">
+                        <h3 id="likes">Share</h3>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="main-video-channel-info">
+                <div class="channel-info">
+                    <img class="avatar" id="channel-avatar" src="" alt="avatar">
+                    <div>
+                        <h3 class="channel-name" id="main-channel-name">Channel Name</h3>
+                        <p id="subscribers">X subscribers</p>
+                    </div>
+                </div>
+            </div>
+            <div class="main-video-description-container">
+                <input id="show-more-checkbox" type="checkbox" class="show-more-checkbox">
+                <label for="show-more-checkbox" class="show-more-label"></label>
+                <div class="main-video-description">
+                    <p id="video-description">Description</p>
+                </div>
+            </div>
+        </div>
+        <div class="channel-column">
+            <div class="channel-column-box">
+                <h3 id="number-comments">X Comments</h3>
+                <div class="comment-section" id="comment-section">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>xxd</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="subbox-generator.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body onload="main()">
+    <header>
+        <div class='header-container'>
+            <div class='header-left'>
+                <div>
+                    <a class="main-logo-link" href="../" target="_blank" rel="noopener"><div>
+                        <img class="main-logo-image" src="../xxd.png" alt="MyTube">
+                    </div></a>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="container-wide">
+            <div class="search-videos-container" id="search-videos-container">
+                <h1>get your subbox</h1>
+                <div class="form"><p>migrate your youtube subscriptions into a xxd video subbox</p>
+                    <ol>
+                        <li>get a <a href="https://developers.google.com/youtube/v3/getting-started" target="_blank" rel="noopener">valid api key</a>. note that you need to create a project for that, and don't forget to enable the "youtube data api v3".
+                            <br>enter the key in the field below:<br>
+                            <input id="api-key">
+                        </li>
+                        <li>go to your <a href="https://www.youtube.com/feed/channels" target="_blank" rel="noopener">youtube subscriptions list</a> directly via the link and scroll to the very bottom (to load everything).</li>
+                        <li id="console">open the developer console. (usually right-click -> inspect -> console)</li>
+                        <li>enter <code>console.log($$("#main-link.channel-link").reduce((str, el)=>str+'\n'+el.href))</code> into the console.</li>
+                        <li>the returned list of links should look like this:<br><div class="channel-example">
+                            https://www.youtube.com/user/channel1<br>
+                            https://www.youtube.com/channel/UCiD_f0rch4nNeL-tWo<br>
+                            https://www.youtube.com/user/channel3<br>
+                            ... <br>
+                            </div><br>
+                            paste this list into the field below:<br>
+                            <textarea rows="10" id="channels"></textarea>
+                        </li>
+                        <li>
+                            click the button below to generate your subbox link<br>
+                            <button onclick="generate_url()" id="button">generate link</button><br>
+                            <progress style="opacity: 0;" id="progress"></progress>
+                        </li>
+                    </ol>
+                    <h3 style="opacity: 0;" id="subbox"></h3>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
