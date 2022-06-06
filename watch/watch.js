@@ -1,4 +1,5 @@
 var global_api_key = "";
+var global_video_id = "";
 
 function main() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,6 +24,7 @@ function main() {
     }
 
     const video_id = urlParams.get("v");
+    global_video_id = video_id;
     const thumbnail_url = `https://i3.ytimg.com/vi/${video_id}/hqdefault.jpg`;
 
     document.getElementById("main-player").src = `https://www.youtube-nocookie.com/embed/${video_id}?playlist=${video_id}&vq=hd1080&autoplay=1&modestbranding=1&rel=0`;
@@ -135,4 +137,16 @@ function search() {
     var search = encodeURIComponent(document.getElementById("search-field").value).replaceAll("%20", "+");
     window.open(`../search/?api=${global_api_key}&search=${search}`, "_blank");
     document.getElementById("search-field").value = "";
+}
+
+function share() {
+    navigator.clipboard.writeText(`http://xxd-dev.github.io/video/watch/?v=${global_video_id}`);
+    let tooltip = document.getElementById("share-button");
+    tooltip.setAttribute("data-tooltip", "copied!");
+    
+    tooltip.classList.add("tooltip-visible");
+    setTimeout(function(){
+        tooltip.classList.remove("tooltip-visible");
+        tooltip.setAttribute("data-tooltip", "copy to clipboard");
+    }, 2000);
 }

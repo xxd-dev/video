@@ -344,6 +344,31 @@ hr {
     margin-top: 1em;
 }
 
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+
+    position: absolute;
+    opacity: 0;
+    
+    padding: 10px;
+    color: var(--white);
+    margin-bottom: 2rem;
+    font-family: Arial;
+    font-size: .75em;
+}
+
+[data-tooltip]:hover:before, .tooltip-visible[data-tooltip]:before {
+    opacity: 1;
+    
+    background: var(--header);
+    margin-top: -50px;
+    margin-left: 20px;    
+}
+
+
+
+
 @media only screen and (max-width: 60em) {
     .main-content {
         display: block;
