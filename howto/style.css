@@ -273,14 +273,27 @@ h3, p, li{
     color: var(--white);
 }
 
-h3, h2 {
-    margin-top: 1em;
-    margin-bottom: .25em;
+h2 {
+    margin-left: 0;
+    margin-top: 1.5em;
+}
+
+h3 {
+    margin-top: .5em;
+    margin-left: .5em;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 p , li{
-    margin-left: 1em;
     line-height: 1.5em;
+}
+
+p {
+    margin-left: 1.5em;
 }
 
 a {
@@ -289,6 +302,15 @@ a {
 }
 
 code {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: var(--darkgray);
+    padding: .2em;
+    border-radius: .2em;
+}
+
+code > a {
+    text-decoration: none;
     font-family: monospace;
     font-weight: bold;
     background-color: var(--darkgray);

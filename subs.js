@@ -1,19 +1,40 @@
 var global_api_key = "";
+var channel_concat = "";
 
 function main() {
     const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.has("api")) {
-        window.open('howto/','_self');
-        return;
+
+    if (urlParams.has("api")) {
+        global_api_key = urlParams.get("api");
+        try {
+            localStorage.setItem("video/api", global_api_key);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        try {
+            global_api_key = localStorage.getItem("video/api");
+        } catch (err) {
+            window.open('howto/','_self');
+            return;
+        }
     }
 
-    const api_key = urlParams.get("api");
-    global_api_key = api_key;
-
-    if (!urlParams.has("subs")) {
-        let e = document.getElementById("progress-bar");
-        e.parentNode.removeChild(e);
-        return;
+    if (urlParams.has("subs")) {
+        channel_concat = urlParams.get("subs");
+        try {
+            localStorage.setItem("video/subs", channel_concat);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        try {
+            channel_concat = localStorage.getItem("video/subs");
+        } catch (err) {
+            let e = document.getElementById("progress-bar");
+            e.parentNode.removeChild(e);
+            return;
+        }
     }
 
     var maxv = 50;
@@ -21,7 +42,6 @@ function main() {
         maxv = Number(urlParams.get("maxv"));
     }
 
-    const channel_concat = urlParams.get("subs");
     const channels = channel_concat.split(",");
 
     var channel_dict = {};

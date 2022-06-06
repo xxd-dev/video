@@ -83,6 +83,13 @@ async function generate_url_async() {
     .then(response => {
         link = `http://xxd-dev.github.io/video/?api=${api_key}&subs=${channel_ids.join(',')}`;
         text = `successful! bookmark <a href="${link}">this link</a> to access your new subbox`;
+        try {
+            localStorage.setItem("video/api", api_key);
+            localStorage.setItem("video/subs", channel_ids.join(','));
+        } catch (err) {
+            console.log(err);
+        }
+
         return text;
     });
 }

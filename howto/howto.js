@@ -8,10 +8,10 @@ function main() {
     fetch("../privacy.md")
     .then((response) => response.text())
     .then((html) => {
-        document.getElementById("privacy").innerHTML = "<h2>privacy policy and cookies:</h2><p>"+escapeHTML(html)+"</p>";
+        document.getElementById("privacy").innerHTML = html;
     });
 
-    fetch("../../LICENSE")
+    fetch("../LICENSE")
     .then((response) => response.text())
     .then((html) => {
         document.getElementById("license").innerHTML = "<h2>license</h2><p>"+escapeHTML(html)+"</p>";
