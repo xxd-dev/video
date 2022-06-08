@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="channel.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script type="text/javascript" src="channel.js"></script>
+    <title>xxd</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body onload="main()">
+    <header>
+        <div class='header-container'>
+            <div class='header-left'>
+                <div>
+                    <a class="main-logo-link" href=""><div>
+                        <img class="main-logo-image" src="../xxd.png" alt="MyTube">
+                    </div></a>
+                </div>
+            </div>
+            <div class='header-center'>
+                <div>
+                    <div class="search-bar">
+                        <input class="search-field" placeholder="Search" id="search-field" onkeydown="keydownSearch(event)">
+                        <button class="search-button" onclick="search()">
+                            <img src="../search.png" class="search-image">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="channel-header">
+            <img class="avatar" id="channel-avatar" src="https://yt3.ggpht.com/ytc/AKedOLTmcAt7u2aJrmAfRkcKOswB1PViNM21yhAD1TX4Tg=s176-c-k-c0x00ffffff-no-rj" alt="avatar">
+            <div>
+                <h2 id="channel-name">darkweeber</h2>
+                <p class="subs" id="channel-subscribers">a few subscribers</p>
+                <p class="subs" id="channel-views">some channelviews</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="grid" id="grid">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

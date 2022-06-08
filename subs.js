@@ -145,32 +145,35 @@ function main() {
             }
         }
 
-        console.log(video_dict);
-        console.log(channel_dict);
         let e = document.getElementById("progress-bar");
         e.parentNode.removeChild(e);
 
         for (let i in videos_list) {
             video = videos_list[i];
-            console.log(video);
             let html = `
             <div class="card">
-                <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
-                    <span style="display: block;">
+                <span style="display: block;">
+                    <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
                         <div class="thumbnail-stack">
                             <img src="${video.thumbnail}" class="card__img" alt="thumbnail">
                             <p class="video-length">${toTime(video_dict[video.videoId].contentDetails.duration)}</p>
                         </div>
-                        <div class="channel-info">
+                    </a>
+                    <div class="channel-info">
+                        <a href="channel/?api=${global_api_key}&c=${video.channelId}" target="_blank" rel="noopener">
                             <img class="avatar" src="${channel_dict[video.channelId].snippet.thumbnails.default.url}" alt="avatar">
-                            <div class="marked">
+                        </a>
+                        <div class="marked">
+                            <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
                                 <h3 class="channel-name crop">${video.title}</h3>
+                            </a>
+                            <a href="channel/?api=${global_api_key}&c=${video.channelId}" target="_blank" rel="noopener">
                                 <p class="subs">${video.channelTitle}</p>
-                                <p class="subs2">${formatNumber(video_dict[video.videoId].statistics.viewCount)} views - ${formatDate(video_dict[video.videoId].snippet.publishedAt)}</p>
-                            </div>
+                            </a>
+                            <p class="subs2">${formatNumber(video_dict[video.videoId].statistics.viewCount)} views - ${formatDate(video_dict[video.videoId].snippet.publishedAt)}</p>
                         </div>
-                    </span>
-                </a>
+                    </div>
+                </span>
             </div>
             `;
             document.getElementById("grid").innerHTML += html;

@@ -45,6 +45,8 @@ function main() {
         document.getElementById("video-description").innerHTML = escapeHTML(description);
         document.getElementById("main-channel-name").innerHTML = channel_title;
         document.getElementById("number-comments").innerHTML = `${comments} Comments`;
+        document.getElementById("channel-link-avatar").href = `../channel/?api=${global_api_key}&c=${channel_id}`;
+        document.getElementById("channel-link-name").href = `../channel/?api=${global_api_key}&c=${channel_id}`;
         console.log(Number(views).toLocaleString('en-US'));
         //todo set values
         return fetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channel_id}&key=${global_api_key}`);
@@ -73,11 +75,16 @@ function main() {
             let comment_name = comments[i].snippet.topLevelComment.snippet.authorDisplayName;
             let comment_text = comments[i].snippet.topLevelComment.snippet.textDisplay;
             let comment_likes = comments[i].snippet.topLevelComment.snippet.likeCount;
+            let channel_id = comments[i].snippet.topLevelComment.snippet.authorChannelId.value;
             let html = `
             <div class="comment">
-                <img class="avatar" src="${comment_avatar}" alt="avatar">
+                <a href="../channel/?api=${global_api_key}&c=${channel_id}" target="_blank" rel="noopener">
+                    <img class="avatar" src="${comment_avatar}" alt="avatar">
+                </a>
                 <div>
-                    <h3>${comment_name}</h3>
+                    <a href="../channel/?api=${global_api_key}&c=${channel_id}" target="_blank" rel="noopener">
+                        <h3>${comment_name}</h3>
+                    </a>
                     <p>${comment_text}</p>
                     <div class="comment-like-container">
                         <img src="../like.png">
