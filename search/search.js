@@ -61,7 +61,7 @@ function main() {
                 continue;
             }
             let video_url = `../watch/?api=${global_api_key}&v=${video.id.videoId}`;
-            let channel_url = `../`;
+            let channel_url = `../channel/?api=${global_api_key}&c=${video.snippet.channelId}`;
             let a = '';
             let sub_count = "";
             if (!channel_dict[video.snippet.channelId].statistics.hiddenSubscriberCount) {
