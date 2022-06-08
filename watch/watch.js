@@ -1,24 +1,34 @@
 var global_api_key = "";
+var global_video_id = "";
 
 function main() {
     const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.has("api")) {
-        window.open('../howto','_self');
-        return;
+    if (urlParams.has("api")) {
+        global_api_key = urlParams.get("api");
+        try {
+            localStorage.setItem("video/api", global_api_key);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        try {
+            global_api_key = localStorage.getItem("video/api");
+        } catch (err) {
+            window.open('howto/','_self');
+            return;
+        }
     }
-
-    const api_key = urlParams.get("api");
-    global_api_key = api_key;
 
     if (!urlParams.has("v")) {
         return;
     }
 
     const video_id = urlParams.get("v");
+    global_video_id = video_id;
     const thumbnail_url = `https://i3.ytimg.com/vi/${video_id}/hqdefault.jpg`;
 
     document.getElementById("main-player").src = `https://www.youtube-nocookie.com/embed/${video_id}?playlist=${video_id}&vq=hd1080&autoplay=1&modestbranding=1&rel=0`;
-    fetch(`https://www.googleapis.com/youtube/v3/videos?id=${video_id}&part=snippet%2CcontentDetails%2Cstatistics &key=${api_key}`)
+    fetch(`https://www.googleapis.com/youtube/v3/videos?id=${video_id}&part=snippet%2CcontentDetails%2Cstatistics &key=${global_api_key}`)
     .then(response => response.json())
     .then(response => {
         const title = response.items[0].snippet.title;
@@ -37,7 +47,7 @@ function main() {
         document.getElementById("number-comments").innerHTML = `${comments} Comments`;
         console.log(Number(views).toLocaleString('en-US'));
         //todo set values
-        return fetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channel_id}&key=${api_key}`);
+        return fetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channel_id}&key=${global_api_key}`);
     })
     .then(response => response.json())
     .then(response => {
@@ -53,7 +63,7 @@ function main() {
         document.getElementById("subscribers").innerHTML = `${formatNumber(channel_subscribers)} subscribers`;
         document.getElementById("channel-avatar").src = channel_avatar;
         const max_comments = 10;
-        return fetch(`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=${max_comments}&order=relevance&videoId=${video_id}&key=${api_key}`);
+        return fetch(`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=${max_comments}&order=relevance&videoId=${video_id}&key=${global_api_key}`);
     })
     .then(response => response.json())
     .then(response => {
@@ -127,4 +137,16 @@ function search() {
     var search = encodeURIComponent(document.getElementById("search-field").value).replaceAll("%20", "+");
     window.open(`../search/?api=${global_api_key}&search=${search}`, "_blank");
     document.getElementById("search-field").value = "";
+}
+
+function share() {
+    navigator.clipboard.writeText(`http://xxd-dev.github.io/video/watch/?v=${global_video_id}`);
+    let tooltip = document.getElementById("share-button");
+    tooltip.setAttribute("data-tooltip", "copied!");
+    
+    tooltip.classList.add("tooltip-visible");
+    setTimeout(function(){
+        tooltip.classList.remove("tooltip-visible");
+        tooltip.setAttribute("data-tooltip", "copy to clipboard");
+    }, 2000);
 }

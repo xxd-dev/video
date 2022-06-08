@@ -2,13 +2,22 @@ var global_api_key = "";
 
 function main() {
     const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.has("api")) {
-        window.open('../howto','_self');
-        return;
-    }
 
-    const api_key = urlParams.get("api");
-    global_api_key = api_key;
+    if (urlParams.has("api")) {
+        global_api_key = urlParams.get("api");
+        try {
+            localStorage.setItem("video/api", global_api_key);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        try {
+            global_api_key = localStorage.getItem("video/api");
+        } catch (err) {
+            window.open('howto/','_self');
+            return;
+        }
+    }
 
     if (!urlParams.has("search")) {
         return;
@@ -20,10 +29,8 @@ function main() {
     var search;
     var video_dict = {};
     var channel_dict = {};
-    //return;
-    //fetch("../query.json") //TODO fetch actual search
     let maxResults = 25;
-    fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${search_query}&key=${api_key}`)
+    fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${search_query}&key=${global_api_key}`)
     .then(response => response.json())
     .then(response => {
         search = response;
@@ -36,7 +43,7 @@ function main() {
         }
         video_concat = Array.from(videoIDs).join(",");
         console.log(video_concat);
-        return fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${video_concat}&key=${api_key}`);
+        return fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${video_concat}&key=${global_api_key}`);
     })
     .then(response => response.json())
     .then(response => {
@@ -46,7 +53,7 @@ function main() {
         }
 
         channel_concat = Array.from(channelIDs).join(",");
-        return fetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channel_concat}&key=${api_key}`);
+        return fetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channel_concat}&key=${global_api_key}`);
     })
     .then(response => response.json())
     .then(response => {

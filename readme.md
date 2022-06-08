@@ -5,13 +5,13 @@
 
 <h2>quickstart</h3>
     <p><ul>
-    <li>if you're here to replace your sub-box, go to <a href="../subbox-generator/" target="_blank" rel="noopener">this link</a> and follow the instructions.</li>
+    <li>if you're here to replace your sub-box, go to <a href="https://xxd-dev.github.io/video/subbox-generator/" target="_blank" rel="noopener">this link</a> and follow the instructions.</li>
     <li>if you're here to watch one video free of ads and recommendations, get a <a href="https://developers.google.com/youtube/v3/getting-started" target="_blank" rel="noopener">valid api key</a> and see <a href="#watch">watch</a> for reference.</li>
     <li>if you want to self-host this, get the <a href="https://github.com/xxd-dev/video" target="_blank" rel="noopener">sourcecode</a>.</li>
     </ul>
     </p>
 
-<h2>components of the website<h2>
+<h2>components of the website</h2>
 <h3 id="watch">watch</h3>
     <p>usage: <code>https://xxd-dev.github.io/video/watch/?api=[YOUR_API_KEY]&v=[VIDEO_ID]</code><br>
     <code>YOUR_API_KEY</code>: youtube enabled api key (look <a href="https://developers.google.com/youtube/v3/getting-started" target="_blank" rel="noopener">here</a> for help)<br>
@@ -43,12 +43,15 @@
     <code>MAX_VIDEOS</code>: (optional, default is 50) number of returned videos<br>
     quota cost: 1 point per channel + 1 point for each 50 channels + 1 point for each 50 returned videos<br>
     <b>warning:</b> many channels/refreshes can use your daily quota quickly!<br>
-    similar to youtubes subscription page, this shows all recent uploads of your subscribed cannels. for each channel, only the newest 50 videos are reported, but in total you can get however many videos back as you specify in <code>MAX_VIDEOS</code>.
+    similar to youtubes subscription page, this shows all recent uploads of your subscribed cannels. for each channel, only the newest 50 videos are reported, but in total you can get however many videos back as you specify in <code>MAX_VIDEOS</code>.<br>
+    if possible, subscriptions and your api key is saved in local storage after opening the page with the correct parameters. this way, you don't need to pass all parameters to the page, but only open <code><a href="https://xxd-dev.github.io/video">xxd-dev.github.io/video</a></code> to access your subs.
     </p>
 
 <h3 id="subbox-gen">subbox generator</h3>
-    <p>usage: <code>https://xxd-dev.github.io/video/subbox-generator</code><br>
+    <p>usage: <code><a href="https://xxd-dev.github.io/video/subbox-generator">https://xxd-dev.github.io/video/subbox-generator</a></code><br>
     quota cost: 0 or 1 points per channel<br>
-    guides you through transferring your youtube subscriptions onto this website.
+    guides you through transferring your youtube subscriptions onto this website.<br>
+    <br>
+    the parameters for your api key and subs are saved in local storage too. to be safe, the link returned still has all the parameters, but it is theoretically possible to just open <code><a href="https://xxd-dev.github.io/video">xxd-dev.github.io/video</a></code> directly and see all of your subscriptions.
     </p>
 </body>
