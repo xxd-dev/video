@@ -42,7 +42,27 @@ function main() {
         maxv = Number(urlParams.get("maxv"));
     }
 
-    const channels = channel_concat.split(",");
+    var channels = [];
+    var channel_rules = {};
+    
+    const regexp = /([a-zA-Z0-9-_]{24})(\[(([0-9:]*)?-([0-9:]*)?)?;([a-zA-Z,]*)?;([a-zA-Z,]*)?\])?/g;
+    const matches = channel_concat.matchAll(regexp);
+
+    for (const match of matches) {
+        channels.push(match[1])
+        console.log(match);
+        console.log(match.index)
+
+        channel_rules[match[1]] = {
+            "min": match[4],
+            "max": match[5],
+            "need": match[6],
+            "avoid": match[7]
+        }
+
+    }
+    console.log(channels);
+    console.log(channel_rules);
 
     var channel_dict = {};
     var videos_list = [];
@@ -92,6 +112,9 @@ function main() {
         videos_list.sort(function (first, second) {
             return second.upload_date_millis- first.upload_date_millis;
         });
+
+        //TODO filter out avoided videos
+
         videos_list = videos_list.slice(0, maxv);
         let videos_list_chunked = sliceIntoChunks(videos_list, 50);
         console.log(videos_list_chunked);
