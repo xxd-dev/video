@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>xxd</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="subbox-editor.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body onload="main()">
+    <header>
+        <div class='header-container'>
+            <div class='header-left'>
+                <div>
+                    <a class="main-logo-link" href="../" target="_blank" rel="noopener"><div>
+                        <img class="main-logo-image" src="../xxd.png" alt="MyTube">
+                    </div></a>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="container-wide">
+            <div class="search-videos-container" id="search-videos-container">
+                <h1>edit subbox</h1>
+                <p>here you find a list of all your subscriptions. you can delete or add channels and edit rules for them.<br>
+                once your're done, don't forget to <b>scroll to the end and press save!</b><br><br></p>
+                <div class="channel-list" id="channel-list">
+                </div>
+                <button onclick="save()" class="save-button" id="save-button">save</button>
+                <h3 id="save-result"></h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
