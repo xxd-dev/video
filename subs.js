@@ -37,6 +37,8 @@ function main() {
         }
     }
 
+    document.getElementById("edit-link").href = `subbox-editor/?api=${global_api_key}&subs=${channel_concat}`;
+
     var maxv = 50;
     if (urlParams.has("maxv")) {
         maxv = Number(urlParams.get("maxv"));

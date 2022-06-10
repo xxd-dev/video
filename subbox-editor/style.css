@@ -358,6 +358,7 @@ code > a {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    max-width: 14em;
 }
 
 .channel-list-divider-top {

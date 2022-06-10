@@ -76,6 +76,18 @@ function main() {
             }
         }
 
+        channels.sort(function(a, b) {
+            c1 = channel_dict[a].snippet.title.toUpperCase();
+            c2 = channel_dict[b].snippet.title.toUpperCase();
+            if (c1 < c2) {
+              return -1;
+            }
+            if (c1 > c2) {
+              return 1;
+            }
+            return 0;
+        });
+
         for (let i in channels) {
             let channel = channels[i];
             let min = (channel_rules[channel].min)? channel_rules[channel].min : "";
