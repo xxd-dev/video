@@ -113,9 +113,30 @@ function main() {
             return second.upload_date_millis- first.upload_date_millis;
         });
 
-        //TODO filter out avoided videos
+        videos_list = videos_list.filter(function (video) {
+            let rules = channel_rules[video.channelId];
+            if (rules["need"]) {
+                let needs = rules["need"].split(",");
+                for (let i in needs) {
+                    let need = needs[i];
+                    if (!video.title.includes(need)) {
+                        return false;
+                    }
+                }
+            }
+            if (rules["avoid"]) {
+                let avoids = rules["avoid"].split(",");
+                for (let i in avoids) {
+                    let avoid = avoids[i];
+                    if (video.title.includes(avoid)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        });
 
-        videos_list = videos_list.slice(0, maxv);
+        videos_list = videos_list.slice(0, maxv + 50); //workaround to make filtering less visible on video numbers
         let videos_list_chunked = sliceIntoChunks(videos_list, 50);
         console.log(videos_list_chunked);
         let video_promises = [];
@@ -167,6 +188,23 @@ function main() {
                 channel_dict[channels[i].id] = channels[i];
             }
         }
+
+        videos_list = videos_list.filter(function (video) {
+            let rules = channel_rules[video.channelId];
+            if (rules["min"]) {
+                if (compareTimes(toTime(video_dict[video.videoId].contentDetails.duration), rules["min"]) === 1) {
+                    return false;
+                }
+            }
+            if (rules["max"]) {
+                if (compareTimes(toTime(video_dict[video.videoId].contentDetails.duration), rules["max"]) === -1) {
+                    return false;
+                }
+            }
+            return true;
+        })
+
+        videos_list = videos_list.slice(0, maxv);
 
         let e = document.getElementById("progress-bar");
         e.parentNode.removeChild(e);
@@ -336,4 +374,24 @@ function toTime(t){
 
 		duration += time.M + ':' + time.S;
 	return duration;
+}
+
+function compareTimes(time1, time2) {
+	t1 = time1.split(":")
+    t2 = time2.split(":")
+    if (t1.length > t2.length) {
+        return -1;
+    } else if (t1.length < t2.length) {
+        return 1;
+    }
+    for (let i in t1) {
+        let n1 = parseInt(t1[i]);
+        let n2 = parseInt(t2[i]);
+        if (n1 > n2) {
+            return -1;
+        } else if (n1 < n2) {
+            return 1;
+        }
+    }
+    return 0;
 }
