@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>xxd</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="subbox-editor.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body onload="main()">
+    <header>
+        <div class='header-container'>
+            <div class='header-left'>
+                <div>
+                    <a class="main-logo-link" href="../" target="_blank" rel="noopener"><div>
+                        <img class="main-logo-image" src="../xxd.png" alt="MyTube">
+                    </div></a>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="container-wide">
+            <div class="search-videos-container" id="search-videos-container">
+                <h1>edit subbox</h1>
+                <p>here you find a list of all your subscriptions. you can delete or add channels and edit rules for them.<br>
+                once your're done, don't forget to <b>scroll to the end and press save!</b><br>
+                <code>min</code> is the duration a video <b>has to exceed</b>, formatted like "0:45" or "1:00:00"<br>
+                <code>min</code> is the duration a video <b>must not exceed</b>, formatted like "15:00" or "1:30:00"<br>
+                <code>need</code> is a list of words that <b>need to be contained</b> in the title, formatted like "gameplay,video" or "song"<br>
+                <code>avoid</code> is a list of words that <b>can not be contained</b> in the title, formatted like "shorts,podcast" or "prank"<br>
+                <br></p>
+                <div class="channel-list" id="channel-list">
+                </div>
+                <div class="channel-list top-gap">
+                    <div class="channel-list-item" id="add-channel">
+                        <div class="avatar-container">
+                            <img class="avatar" src="user.png" alt="avatar">
+                            <button class="delete-side sub" onclick="subscribe()">subscribe</button>
+                        </div>
+                        <div class="channel-list-divider">
+                            <div class="channel-list-divider-top">
+                                <p>add new id</p>
+                                <button class="delete-main sub" onclick="subscribe()">subscribe</button>
+                            </div>
+                            <input class="channel-list-divider-bottom channel-id">
+                            
+                        </div>
+                        <div class="channel-list-divider spacer">
+                            <p class="channel-list-divider-top"></p>
+                            <p class="channel-list-divider-bottom">[</p>
+                        </div>
+                        <div class="channel-list-divider">
+                            <p class="channel-list-divider-top">minimum</p>
+                            <input class="channel-list-divider-bottom duration">
+                        </div>
+                        <div class="channel-list-divider spacer">
+                            <p class="channel-list-divider-top"></p>
+                            <p class="channel-list-divider-bottom">-</p>
+                        </div>
+                        <div class="channel-list-divider">
+                            <p class="channel-list-divider-top">maximum</p>
+                            <input class="channel-list-divider-bottom duration">
+                        </div>
+                        <div class="channel-list-divider spacer">
+                            <p class="channel-list-divider-top"></p>
+                            <p class="channel-list-divider-bottom">,</p>
+                        </div>
+                        <div class="channel-list-divider">
+                            <p class="channel-list-divider-top">need</p>
+                            <input class="channel-list-divider-bottom listing">
+                        </div>
+                        <div class="channel-list-divider spacer">
+                            <p class="channel-list-divider-top"></p>
+                            <p class="channel-list-divider-bottom">,</p>
+                        </div>
+                        <div class="channel-list-divider">
+                            <p class="channel-list-divider-top">avoid</p>
+                            <input class="channel-list-divider-bottom listing">
+                        </div>
+                        <div class="channel-list-divider spacer">
+                            <p class="channel-list-divider-top"></p>
+                            <p class="channel-list-divider-bottom">]</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="save()" class="save-button" id="save-button">save</button>
+                <h3 id="save-result"></h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

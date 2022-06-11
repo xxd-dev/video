@@ -37,12 +37,34 @@ function main() {
         }
     }
 
+    document.getElementById("edit-link").href = `subbox-editor/?api=${global_api_key}&subs=${channel_concat}`;
+
     var maxv = 50;
     if (urlParams.has("maxv")) {
         maxv = Number(urlParams.get("maxv"));
     }
 
-    const channels = channel_concat.split(",");
+    var channels = [];
+    var channel_rules = {};
+    
+    const regexp = /([a-zA-Z0-9-_]{24})(\[(([0-9:]*)?-([0-9:]*)?)?;([a-zA-Z,]*)?;([a-zA-Z,]*)?\])?/g;
+    const matches = channel_concat.matchAll(regexp);
+
+    for (const match of matches) {
+        channels.push(match[1])
+        console.log(match);
+        console.log(match.index)
+
+        channel_rules[match[1]] = {
+            "min": match[4],
+            "max": match[5],
+            "need": match[6],
+            "avoid": match[7]
+        }
+
+    }
+    console.log(channels);
+    console.log(channel_rules);
 
     var channel_dict = {};
     var videos_list = [];
@@ -92,7 +114,31 @@ function main() {
         videos_list.sort(function (first, second) {
             return second.upload_date_millis- first.upload_date_millis;
         });
-        videos_list = videos_list.slice(0, maxv);
+
+        videos_list = videos_list.filter(function (video) {
+            let rules = channel_rules[video.channelId];
+            if (rules["need"]) {
+                let needs = rules["need"].split(",");
+                for (let i in needs) {
+                    let need = needs[i];
+                    if (!video.title.includes(need)) {
+                        return false;
+                    }
+                }
+            }
+            if (rules["avoid"]) {
+                let avoids = rules["avoid"].split(",");
+                for (let i in avoids) {
+                    let avoid = avoids[i];
+                    if (video.title.includes(avoid)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        });
+
+        videos_list = videos_list.slice(0, maxv + 50); //workaround to make filtering less visible on video numbers
         let videos_list_chunked = sliceIntoChunks(videos_list, 50);
         console.log(videos_list_chunked);
         let video_promises = [];
@@ -144,6 +190,23 @@ function main() {
                 channel_dict[channels[i].id] = channels[i];
             }
         }
+
+        videos_list = videos_list.filter(function (video) {
+            let rules = channel_rules[video.channelId];
+            if (rules["min"]) {
+                if (compareTimes(toTime(video_dict[video.videoId].contentDetails.duration), rules["min"]) === 1) {
+                    return false;
+                }
+            }
+            if (rules["max"]) {
+                if (compareTimes(toTime(video_dict[video.videoId].contentDetails.duration), rules["max"]) === -1) {
+                    return false;
+                }
+            }
+            return true;
+        })
+
+        videos_list = videos_list.slice(0, maxv);
 
         let e = document.getElementById("progress-bar");
         e.parentNode.removeChild(e);
@@ -313,4 +376,24 @@ function toTime(t){
 
 		duration += time.M + ':' + time.S;
 	return duration;
+}
+
+function compareTimes(time1, time2) {
+	t1 = time1.split(":")
+    t2 = time2.split(":")
+    if (t1.length > t2.length) {
+        return -1;
+    } else if (t1.length < t2.length) {
+        return 1;
+    }
+    for (let i in t1) {
+        let n1 = parseInt(t1[i]);
+        let n2 = parseInt(t2[i]);
+        if (n1 > n2) {
+            return -1;
+        } else if (n1 < n2) {
+            return 1;
+        }
+    }
+    return 0;
 }
