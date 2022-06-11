@@ -112,7 +112,7 @@ function main() {
                     <p class="channel-list-divider-bottom">[</p>
                 </div>
                 <div class="channel-list-divider">
-                    <p class="channel-list-divider-top">minimum</p>
+                    <p class="channel-list-divider-top">min</p>
                     <input class="channel-list-divider-bottom duration" value="${min}">
                 </div>
                 <div class="channel-list-divider spacer">
@@ -120,7 +120,7 @@ function main() {
                     <p class="channel-list-divider-bottom">-</p>
                 </div>
                 <div class="channel-list-divider">
-                    <p class="channel-list-divider-top">maximum</p>
+                    <p class="channel-list-divider-top">max</p>
                     <input class="channel-list-divider-bottom duration" value="${max}">
                 </div>
                 <div class="channel-list-divider spacer">
@@ -239,4 +239,91 @@ function save_throwing() {
     link = `http://xxd-dev.github.io/video/?api=${global_api_key}&subs=${channel_concat}`;
     text = `successful! bookmark <a href="${link}">this link</a> to access your new subbox`;
     return text;
+}
+
+function subscribe() {
+    let channel_elem = document.getElementById("add-channel");
+    let id = channel_elem.children[1].children[1].value;
+    let min = channel_elem.children[3].children[1].value;
+    let max = channel_elem.children[5].children[1].value;
+    let need = channel_elem.children[7].children[1].value;
+    let avoid = channel_elem.children[9].children[1].value;
+    if (id === "") {
+        alert("invalid channel id");
+        return;
+    }
+    fetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=${global_api_key}`)
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        let channels = response.items
+        for (let i in channels) {
+            channel_dict[channels[i].id] = channels[i];
+        }
+        let channel = id;
+        let html = `
+        <div class="channel-list-item">
+            <div class="avatar-container">
+                <img class="avatar" src="${channel_dict[channel].snippet.thumbnails.default.url}" alt="avatar">
+                <button class="delete-side unsub" onclick="unsub('${channel}')">subbed</button>
+            </div>
+            <div class="channel-list-divider">
+                <div class="channel-list-divider-top">
+                    <p>${channel_dict[channel].snippet.title}</p>
+                    <button class="delete-main unsub" onclick="unsub('${channel}')">subbed</button>
+                </div>
+                <p class="channel-list-divider-bottom">${channel}</p>
+            </div>
+            <div class="channel-list-divider spacer">
+                <p class="channel-list-divider-top"></p>
+                <p class="channel-list-divider-bottom">[</p>
+            </div>
+            <div class="channel-list-divider">
+                <p class="channel-list-divider-top">min</p>
+                <input class="channel-list-divider-bottom duration" value="${min}">
+            </div>
+            <div class="channel-list-divider spacer">
+                <p class="channel-list-divider-top"></p>
+                <p class="channel-list-divider-bottom">-</p>
+            </div>
+            <div class="channel-list-divider">
+                <p class="channel-list-divider-top">max</p>
+                <input class="channel-list-divider-bottom duration" value="${max}">
+            </div>
+            <div class="channel-list-divider spacer">
+                <p class="channel-list-divider-top"></p>
+                <p class="channel-list-divider-bottom">,</p>
+            </div>
+            <div class="channel-list-divider">
+                <p class="channel-list-divider-top">need</p>
+                <input class="channel-list-divider-bottom listing" value="${need}">
+            </div>
+            <div class="channel-list-divider spacer">
+                <p class="channel-list-divider-top"></p>
+                <p class="channel-list-divider-bottom">,</p>
+            </div>
+            <div class="channel-list-divider">
+                <p class="channel-list-divider-top">avoid</p>
+                <input class="channel-list-divider-bottom listing" value="${avoid}">
+            </div>
+            <div class="channel-list-divider spacer">
+                <p class="channel-list-divider-top"></p>
+                <p class="channel-list-divider-bottom">]</p>
+            </div>
+        </div>
+        `;
+        document.getElementById("channel-list").innerHTML += html;
+
+        channel_elem.children[1].children[1].value = "";
+        channel_elem.children[3].children[1].value = "";
+        channel_elem.children[5].children[1].value = "";
+        channel_elem.children[7].children[1].value = "";
+        channel_elem.children[9].children[1].value = "";
+
+    })
+    .catch(err => {
+        alert("invalid channel id");
+        return;
+    })
 }

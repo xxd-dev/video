@@ -381,6 +381,7 @@ code > a {
 
 .duration {
     max-width: 4.5em;
+    min-width: 4.5em;
 }
 
 .listing {
@@ -434,6 +435,7 @@ input {
     width: 100%;
     border: none;
     border-radius: 0;
+    max-height: 1.5em;
 }
 
 .channel-list-divider-top > p {
@@ -455,6 +457,24 @@ input {
     display: inline-block;
     width: 100%;
     font-size: 1.5em;
+}
+
+.top-gap {
+    margin-top: 1em;
+}
+
+.channel-id {
+    min-width: 14.4em;
+}
+
+.sub {
+    min-width: 6em;
+    background-color: var(--accent);
+    height: 2em;
+    font-size: 1em;
+    color: var(--white);
+    border: none;
+    margin: 0;
 }
 
 
