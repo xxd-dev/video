@@ -7,12 +7,16 @@ function main() {
         global_api_key = urlParams.get("api");
         try {
             localStorage.setItem("video/api", global_api_key);
+            
         } catch (err) {
             console.log(err);
         }
     } else {
         try {
             global_api_key = localStorage.getItem("video/api");
+            if (global_api_key == null) {
+                throw Error("value not found");
+            }
         } catch (err) {
             window.open('howto/','_self');
             return;

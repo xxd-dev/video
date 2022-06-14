@@ -15,6 +15,9 @@ function main() {
     } else {
         try {
             global_api_key = localStorage.getItem("video/api");
+            if (global_api_key == null) {
+                throw Error("value not found");
+            }
         } catch (err) {
             window.open('../howto','_self');
             return;
