@@ -107,9 +107,14 @@ function main() {
             }
         }
         videos_list = raw_videos.map(function(item) {
+            console.log(item.snippet.thumbnails.medium)
+            let thumb = 'https://via.placeholder.com/480x360.png';
+            try {
+                thumb = item.snippet.thumbnails.high.url
+            } catch (e) {}
             return {
                 videoId: item.snippet.resourceId.videoId,
-                thumbnail: item.snippet.thumbnails.high.url,
+                thumbnail: thumb,
                 title: item.snippet.title,
                 channelId: item.snippet.channelId,
                 channelTitle: item.snippet.channelTitle,
