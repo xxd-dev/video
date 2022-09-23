@@ -49,9 +49,13 @@ function main() {
     .then(response => {
         let raw_videos = response.items;
         videos_list = raw_videos.map(function(item) {
+            let thumb = 'https://via.placeholder.com/480x360.png';
+            try {
+                thumb = item.snippet.thumbnails.high.url
+            } catch (e) {}
             return {
                 videoId: item.snippet.resourceId.videoId,
-                thumbnail: item.snippet.thumbnails.high.url,
+                thumbnail: thumb,
                 title: item.snippet.title,
                 channelId: item.snippet.channelId,
                 channelTitle: item.snippet.channelTitle,
@@ -71,6 +75,7 @@ function main() {
 
         for (let i in videos_list) {
             let video = videos_list[i];
+            try {
             let html = `
             <div class="card">
                 <a href="../watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
@@ -90,6 +95,9 @@ function main() {
             </div>
             `;
             document.getElementById("grid").innerHTML += html;
+            } catch (e) {
+                console.log(e)
+            }
         }
 
     })
@@ -158,7 +166,7 @@ function keydownSearch(event) {
 
 function search() {
     var search = encodeURIComponent(document.getElementById("search-field").value).replaceAll("%20", "+");
-    window.open(`search/?api=${global_api_key}&search=${search}`, "_blank");
+    window.open(`../search/?api=${global_api_key}&search=${search}`, "_blank");
     document.getElementById("search-field").value = "";
 }
 

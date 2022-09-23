@@ -58,8 +58,6 @@ function main() {
 
     for (const match of matches) {
         channels.push(match[1])
-        console.log(match);
-        console.log(match.index)
 
         channel_rules[match[1]] = {
             "min": match[4],
@@ -107,7 +105,6 @@ function main() {
             }
         }
         videos_list = raw_videos.map(function(item) {
-            console.log(item.snippet.thumbnails.medium)
             let thumb = 'https://via.placeholder.com/480x360.png';
             try {
                 thumb = item.snippet.thumbnails.high.url
@@ -224,33 +221,37 @@ function main() {
 
         for (let i in videos_list) {
             video = videos_list[i];
-            let html = `
-            <div class="card">
-                <span style="display: block;">
-                    <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
-                        <div class="thumbnail-stack">
-                            <img src="${video.thumbnail}" class="card__img" alt="thumbnail">
-                            <p class="video-length">${toTime(video_dict[video.videoId].contentDetails.duration)}</p>
-                        </div>
-                    </a>
-                    <div class="channel-info">
-                        <a href="channel/?api=${global_api_key}&c=${video.channelId}" target="_blank" rel="noopener">
-                            <img class="avatar" src="${channel_dict[video.channelId].snippet.thumbnails.default.url}" alt="avatar">
+            try {
+                let html = `
+                <div class="card">
+                    <span style="display: block;">
+                        <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
+                            <div class="thumbnail-stack">
+                                <img src="${video.thumbnail}" class="card__img" alt="thumbnail">
+                                <p class="video-length">${toTime(video_dict[video.videoId].contentDetails.duration)}</p>
+                            </div>
                         </a>
-                        <div class="marked">
-                            <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
-                                <h3 class="channel-name crop">${video.title}</h3>
-                            </a>
+                        <div class="channel-info">
                             <a href="channel/?api=${global_api_key}&c=${video.channelId}" target="_blank" rel="noopener">
-                                <p class="subs">${video.channelTitle}</p>
+                                <img class="avatar" src="${channel_dict[video.channelId].snippet.thumbnails.default.url}" alt="avatar">
                             </a>
-                            <p class="subs2">${formatNumber(video_dict[video.videoId].statistics.viewCount)} views - ${formatDate(video_dict[video.videoId].snippet.publishedAt)}</p>
+                            <div class="marked">
+                                <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
+                                    <h3 class="channel-name crop">${video.title}</h3>
+                                </a>
+                                <a href="channel/?api=${global_api_key}&c=${video.channelId}" target="_blank" rel="noopener">
+                                    <p class="subs">${video.channelTitle}</p>
+                                </a>
+                                <p class="subs2">${formatNumber(video_dict[video.videoId].statistics.viewCount)} views - ${formatDate(video_dict[video.videoId].snippet.publishedAt)}</p>
+                            </div>
                         </div>
-                    </div>
-                </span>
-            </div>
-            `;
-            document.getElementById("grid").innerHTML += html;
+                    </span>
+                </div>
+                `;
+                document.getElementById("grid").innerHTML += html;
+            } catch (e) {
+                console.log(video);
+            }
         }
     })
 
@@ -267,10 +268,6 @@ function sliceIntoChunks(arr, chunkSize) {
 
 String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
-}
-
-function tmp() {
-    console.log("nice");
 }
   
 function escapeHTML(str){
