@@ -221,6 +221,14 @@ function main() {
 
         for (let i in videos_list) {
             video = videos_list[i];
+
+            isLive = video_dict[video.videoId].snippet.liveBroadcastContent
+            console.log("live", isLive)
+            duration = toTime(video_dict[video.videoId].contentDetails.duration)
+            if (isLive !== "none") {
+                duration = isLive
+            }
+
             try {
                 let html = `
                 <div class="card">
@@ -228,7 +236,7 @@ function main() {
                         <a href="watch/?api=${global_api_key}&v=${video.videoId}" target="_blank" rel="noopener">
                             <div class="thumbnail-stack">
                                 <img src="${video.thumbnail}" class="card__img" alt="thumbnail">
-                                <p class="video-length">${toTime(video_dict[video.videoId].contentDetails.duration)}</p>
+                                <p class="video-length">${duration}</p>
                             </div>
                         </a>
                         <div class="channel-info">
